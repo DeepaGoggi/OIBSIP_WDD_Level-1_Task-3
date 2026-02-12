@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Temperature Converter</title>
+  <link rel="stylesheet" href="style.css"> 
+</head>
+
+<body>
+
+  <div class="converter">
+    <h2>🌡️ Temperature Converter</h2>
+
+    <!-- Temperature Input -->
+    <label for="tempInput">Temperature (in degrees)</label>
+    <input type="text" id="tempInput" placeholder="Enter temperature">
+
+    <!-- Unit Selection -->
+    <label for="unit">Type</label>
+    <select id="unit">
+      <option value="">Select Unit</option>
+      <option value="celsius">Celsius (°C)</option>
+      <option value="fahrenheit">Fahrenheit (°F)</option>
+      <option value="kelvin">Kelvin (K)</option>
+    </select>
+
+    <!-- Convert Button -->
+    <button onclick="convertTemp()">Convert</button>
+
+    <!-- Result -->
+    <label>Result :</label>
+    <div class="result" id="result"></div>
+    <div class="error" id="error"></div>
+  </div>
+
+  <script>
+    function convertTemp() {
+      const temp = document.getElementById("tempInput").value;
+      const unit = document.getElementById("unit").value;
+      const result = document.getElementById("result");
+      const error = document.getElementById("error");
+
+      result.innerHTML = "";
+      error.innerHTML = "";
+
+      if (temp === "" || isNaN(temp)) {
+        error.innerHTML = "❌ Please enter a valid number";
+        return;
+      }
+
+      if (unit === "") {
+        error.innerHTML = "❌ Please select a unit";
+        return;
+      }
+
+      let output = "";
+
+      if (unit === "celsius") {
+        output = `
+          ${(temp * 9/5 + 32).toFixed(2)} °F <br>
+          ${(Number(temp) + 273.15).toFixed(2)} K
+        `;
+      } 
+      else if (unit === "fahrenheit") {
+        output = `
+          ${((temp - 32) * 5/9).toFixed(2)} °C <br>
+          ${(((temp - 32) * 5/9) + 273.15).toFixed(2)} K
+        `;
+      } 
+      else if (unit === "kelvin") {
+        output = `
+          ${(temp - 273.15).toFixed(2)} °C <br>
+          ${((temp - 273.15) * 9/5 + 32).toFixed(2)} °F
+        `;
+      }
+
+      result.innerHTML = "✅ Converted Temperature:<br>" + output;
+    }
+  </script>
+
+</body>
+</html>
+
